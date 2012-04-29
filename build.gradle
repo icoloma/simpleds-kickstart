@@ -1,6 +1,18 @@
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
-//apply from: "$sharedLocation/providedCompile.gradle"
+/*
+
+  To start this project, install gradle >= 1.0rc2 and run:
+
+  gradle eclipse
+
+  Then start eclipse and create a Google Webapp launcher. 
+
+  If you want to start with some data, launch 
+  http://localhost:8888/users/reset
+
+*/
+
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse'
@@ -46,7 +58,6 @@ dependencies {
           "org.codehaus.jackson:jackson-mapper-asl:1.9.2",
           "org.extrema-sistemas:simpleds:${simpledsVersion}"
   testCompile "junit:junit:4.5"
-//  providedCompile 'javax.servlet:servlet-api:2.5'
 }
  
 eclipse {
