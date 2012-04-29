@@ -1,0 +1,29 @@
+<!-- Generated from app.yaml. Do not edit. -->
+<appengine-web-app xmlns='http://appengine.google.com/ns/1.0'>
+  <application>simpleds-kickstart</application>
+  <version>2012-04-29</version>
+  <static-files>
+    <include path='/js/*.js' expiration='1d'/>
+    <include path='/css/*.css' expiration='1d'/>
+    <include path='/img/*' expiration='1d'/>
+    <include path='/favicon.ico' expiration='1d'/>
+    <include path='/error/*.html'/>
+    <include path='/robots.txt'/>
+  </static-files>
+  <resource-files>
+  </resource-files>
+  <ssl-enabled>true</ssl-enabled>
+  <precompilation-enabled>true</precompilation-enabled>
+  <threadsafe>true</threadsafe>
+  <code-lock>false</code-lock>
+  <sessions-enabled>false</sessions-enabled>
+  <inbound-services>
+  </inbound-services>
+  <warmup-requests-enabled>true</warmup-requests-enabled>
+  <static-error-handlers>
+    <handler file='/error/default.html' error-code='default'/>
+    <handler file='/error/over_quota.html' error-code='over_quota'/>
+    <handler file='/error/dos_api_denial.html' error-code='dos_api_denial'/>
+    <handler file='/error/timeout.html' error-code='timeout'/>
+  </static-error-handlers>
+</appengine-web-app>

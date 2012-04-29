@@ -1,0 +1,72 @@
+import org.gradle.plugins.ide.eclipse.model.SourceFolder
+
+//apply from: "$sharedLocation/providedCompile.gradle"
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+repositories {
+  mavenCentral()
+  mavenRepo name:'sonatype-snapshots', url:'http://oss.sonatype.org/content/repositories/snapshots/'
+}
+
+// webinflib
+if (!hasProperty('webAppDirName')) {
+  project.webAppDirName = 'src/main/webapp'
+}
+
+task 'cleanWebinflib' << { 
+  ant.delete(dir: "$webAppDirName/WEB-INF/lib")
+}
+clean.dependsOn cleanWebinflib
+
+task 'webinflib' << {
+  copy {
+    from configurations.runtime.files
+        into "$webAppDirName/WEB-INF/lib"
+    }
+}
+compileJava.dependsOn webinflib
+
+ 
+dependencies {
+  compile "com.google.inject:guice:3.0",
+          "com.google.inject.extensions:guice-servlet:3.0",
+          "com.sun.jersey.contribs:jersey-guice:${jerseyVersion}",
+          "com.sun.jersey.contribs:jersey-multipart:${jerseyVersion}",
+          "com.sun.jersey:jersey-core:${jerseyVersion}",
+          "com.sun.jersey:jersey-json:${jerseyVersion}",
+          "com.sun.jersey:jersey-servlet:${jerseyVersion}",
+          "com.sun.jersey:jersey-server:${jerseyVersion}",
+          "com.sun.xml.bind:jaxb-impl:2.1.12", // Better than 2.2.5, workaround for https://groups.google.com/group/google-appengine-java/browse_thread/thread/dc8ed0738064f486/4be34ebef5a91b08
+          "aopalliance:aopalliance:1.0",
+          "ch.qos.logback:logback-classic:0.9.24",
+          "joda-time:joda-time:2.1",
+          "org.codehaus.jackson:jackson-core-asl:1.9.2",
+          "org.codehaus.jackson:jackson-mapper-asl:1.9.2",
+          "org.extrema-sistemas:simpleds:${simpledsVersion}"
+  testCompile "junit:junit:4.5"
+//  providedCompile 'javax.servlet:servlet-api:2.5'
+}
+ 
+eclipse {
+  project {
+    natures 'org.eclipse.jdt.core.javanature',
+            'com.google.appengine.eclipse.core.gaeNature',
+            'com.google.gdt.eclipse.core.webAppNature'
+    buildCommand 'com.google.appengine.eclipse.core.projectValidator'
+    buildCommand 'com.google.gdt.eclipse.core.webAppProjectValidator'
+  }
+  classpath {
+    defaultOutputDir = file("$webAppDirName/WEB-INF/classes")
+    containers "com.google.appengine.eclipse.core.GAE_CONTAINER"
+    sourceSets {
+      resources {
+        output.resourcesDir = "build/test-classes"
+        output.classesDir   = "build/test-classes"
+      }
+    }
+  }
+}
+// workaround http://issues.gradle.org/browse/GRADLE-1984
+eclipse.classpath.file.beforeMerged { classpath -> classpath.entries.clear() }

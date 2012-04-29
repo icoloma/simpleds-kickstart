@@ -1,0 +1,72 @@
+<!-- Generated from app.yaml. Do not edit. -->
+<web-app version='2.5' xmlns='http://java.sun.com/xml/ns/javaee' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd'>
+  <filter>
+    <filter-name>org.simpleds.cache.CacheFilter</filter-name>
+    <filter-class>org.simpleds.cache.CacheFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>org.simpleds.cache.CacheFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>com.google.appengine.tools.appstats.AppstatsFilter</filter-name>
+    <filter-class>com.google.appengine.tools.appstats.AppstatsFilter</filter-class>
+    <init-param>
+      <param-name>logMessage</param-name>
+      <param-value>Appstats available: &lt;a href=&apos;/_ah/appstats/details?time={ID}&apos;&gt;/_ah/appstats/details?time={ID}&lt;/a&gt;</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>com.google.appengine.tools.appstats.AppstatsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>com.acme.filter.GuiceFilter</filter-name>
+    <filter-class>com.acme.filter.GuiceFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>com.acme.filter.GuiceFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>com.acme.servlet.WarmupServlet</servlet-name>
+    <servlet-class>com.acme.servlet.WarmupServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>com.acme.servlet.WarmupServlet</servlet-name>
+    <url-pattern>/_ah/warmup</url-pattern>
+  </servlet-mapping>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>aname</web-resource-name>
+      <url-pattern>/_ah/warmup</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <servlet>
+    <servlet-name>com.google.appengine.tools.appstats.AppstatsServlet</servlet-name>
+    <servlet-class>com.google.appengine.tools.appstats.AppstatsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>com.google.appengine.tools.appstats.AppstatsServlet</servlet-name>
+    <url-pattern>/_ah/appstats/*</url-pattern>
+  </servlet-mapping>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>aname</web-resource-name>
+      <url-pattern>/_ah/appstats/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <listener>
+    <listener-class>com.acme.config.GuiceConfigListener</listener-class>
+  </listener>
+<!-- mime-mapping *.otf application/x-opentype *.woff application/x-woff -->
+<error-page> <error-code>500</error-code> <location>/WEB-INF/jsp/error/500.jsp</location> </error-page>
+<error-page> <error-code>404</error-code> <location>/WEB-INF/jsp/error/404.jsp</location> </error-page>
+<!-- Include the same prefix on all JSP pages --> <jsp-config> <jsp-property-group> <page-encoding>utf-8</page-encoding> <url-pattern>*.jsp</url-pattern> <el-ignored>false</el-ignored> <include-prelude>/WEB-INF/taglibs.jspf</include-prelude> <deferred-syntax-allowed-as-literal>true</deferred-syntax-allowed-as-literal> <trim-directive-whitespaces>true</trim-directive-whitespaces> </jsp-property-group> </jsp-config>
+</web-app>

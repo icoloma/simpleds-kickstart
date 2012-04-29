@@ -1,0 +1,3 @@
+# This is a demo site. You should probably change this
+User-agent: *
+Disallow: /

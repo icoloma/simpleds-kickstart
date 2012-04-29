@@ -1,0 +1,99 @@
+#  AppEngine descriptor.  For documentation check 
+#  http://code.google.com/appengine/docs/java/configyaml/appconfig_yaml.html 
+
+# --------
+# appengine-web.xml info
+# --------
+
+application: simpleds-kickstart
+
+version: 2012-04-29
+
+static_files:
+- include: /js/*.js
+  expiration: 1d
+- include: /css/*.css
+  expiration: 1d
+- include: /img/*
+  expiration: 1d
+- include: /favicon.ico
+  expiration: 1d  
+- include: /error/*.html
+- include: /robots.txt
+
+error_handlers:
+- file: /error/default.html
+  error_code: default
+- file: /error/over_quota.html
+  error_code: over_quota
+- file: /error/dos_api_denial.html
+  error_code: dos_api_denial
+- file: /error/timeout.html
+  error_code: timeout
+
+sessions_enabled: false
+
+precompilation_enabled: true
+
+inbound_services:
+- warmup
+
+threadsafe: true
+
+# --------
+# web.xml info
+# --------
+
+listeners:
+- com.acme.config.GuiceConfigListener
+
+handlers:
+
+- url: /*
+  filter: org.simpleds.cache.CacheFilter
+
+- url: /*
+  filter: com.google.appengine.tools.appstats.AppstatsFilter
+  init_params:
+    logMessage: "Appstats available: <a href='/_ah/appstats/details?time={ID}'>/_ah/appstats/details?time={ID}</a>"
+
+- url: /*
+  filter: com.acme.filter.GuiceFilter
+
+- url: /_ah/warmup
+  servlet: com.acme.servlet.WarmupServlet
+  login: admin
+
+- url: /_ah/appstats/*
+  servlet: com.google.appengine.tools.appstats.AppstatsServlet
+  login: admin
+
+web_xml:
+
+  <!--
+  mime-mapping *.otf application/x-opentype *.woff application/x-woff
+  -->
+  
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/jsp/error/500.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/jsp/error/404.jsp</location>
+  </error-page>
+  
+  <!--
+    Include the same prefix on all JSP pages 
+  -->
+  <jsp-config>
+    <jsp-property-group>
+      <page-encoding>utf-8</page-encoding>
+      <url-pattern>*.jsp</url-pattern>
+      <el-ignored>false</el-ignored>
+      <include-prelude>/WEB-INF/taglibs.jspf</include-prelude>
+      <deferred-syntax-allowed-as-literal>true</deferred-syntax-allowed-as-literal>
+      <trim-directive-whitespaces>true</trim-directive-whitespaces>
+    </jsp-property-group>
+  </jsp-config>
