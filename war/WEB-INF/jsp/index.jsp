@@ -5,13 +5,8 @@
     <script>
     var 
         
-        // true if there is a fetch in progress
-        fetchInProgress,
-        
         // the last cursor value returned by the server
         cursor,
-        
-        firstPage = true,
 
         $tbody = $('.userList > tbody');
     var bindScroll = function() {
@@ -19,11 +14,7 @@
 	    $(document).endlessScroll({
 	        bottomPixels: 100,
 	        unbindListeners: true,
-	        callInProcess: function() {
-	            return fetchInProgress;
-	        },
-	        callback: function() {
-	            fetchInProcess = true;
+	        callback: function(data) {
 	            $.ajax({
 	                url: '/users',
 	                type: 'get',
@@ -38,7 +29,6 @@
 	                */
 	                success: function(result) {
 	                    cursor = result.cursor;
-	                    firstPage = false;
 	                    $.each(result.data, function(index, item) {
 	                      $tbody.append(
 	                        '<tr class="' + (item.deleted? 'deleted' : '') + '">' +
@@ -47,10 +37,10 @@
 	                        '</tr>'
 	                      );
 	                    });
-	                    fetchInProcess = false;
+	                    data.callInProgress = false;
+	                    data.eof = !result.cursor;
 	                }
 	            });
-	            return cursor || firstPage;
 	        }
 	    });
 	    return false;
