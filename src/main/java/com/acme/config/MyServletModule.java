@@ -2,8 +2,8 @@ package com.acme.config;
 
 import java.util.Set;
 
+import com.acme.action.Root;
 import com.acme.action.Users;
-import com.acme.model.Root;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import com.google.inject.servlet.ServletModule;

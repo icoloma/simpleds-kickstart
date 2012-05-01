@@ -5,7 +5,7 @@
       <div class="nav-collapse collapse">
         <ul class="nav">
           <li class="">
-            <a href="http://code.google.com/p/simpleds/">Go to the project</a>
+            <a href="http://code.google.com/p/simpleds/">Go to the SimpleDS project</a>
           </li>
         </ul>
       </div>

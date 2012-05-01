@@ -4,3 +4,10 @@
 body {
 	padding-top: 60px;
 }
+.deleted, .deleted a {
+	font-style: italic;
+	color: #888;
+}
+.alert p {
+	margin: 5px 0;
+}

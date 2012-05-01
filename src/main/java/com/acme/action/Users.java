@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,10 +17,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.simpleds.CursorList;
+import org.simpleds.EntityManager;
 
 import com.acme.model.User;
 import com.acme.service.UsersService;
+import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
+import com.sun.jersey.api.core.InjectParam;
 import com.sun.jersey.api.view.Viewable;
 
 @Path("/users")
@@ -26,6 +31,9 @@ public class Users {
 
 	@Inject
 	private UsersService usersService;
+	
+	@Inject
+	private EntityManager entityManager;
 	
 	@GET @Path("")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -37,9 +45,14 @@ public class Users {
 	}
 	
 	@GET @Path("{key}")
-	public Viewable get(@PathParam("key") KeyParameter keyParam) {
+	public Viewable get(
+			@PathParam("key") KeyParameter keyParam,
+			@InjectParam HttpServletRequest request) {
 		Key userKey = keyParam.getValue(User.class);
-		return new Viewable("/users/view.jsp", usersService.get(userKey));
+		User user = usersService.get(userKey);
+		Entity entity = entityManager.getClassMetadata(User.class).javaToDatastore(null, user);
+		request.setAttribute("entity", entity.toString().replace("<", "&lt;"));
+		return new Viewable("/users/edit.jsp", user);
 	}
 	
 	/**
@@ -57,7 +70,15 @@ public class Users {
 		user.setName(name);
 		user.setDescription(description);
 		usersService.save(user);
-		return Response.seeOther(new URI("/users/" + user.getKey().getId())).build();
+		return Response.seeOther(new URI("/")).build();
+	}
+	
+	@DELETE @Path("{key}") 
+	public Response delete(
+			@PathParam("key") KeyParameter keyParam
+			) throws URISyntaxException {
+		usersService.delete(keyParam.getValue(User.class));
+		return Response.seeOther(new URI("/")).build();
 	}
 	
 	/**

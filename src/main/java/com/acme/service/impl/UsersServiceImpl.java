@@ -35,8 +35,8 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	/**
-	 * Example of use of transactions. Notice that in this case transactions 
-	 * are not required.
+	 * Example of transactions. {@link Transactional} uses aspects to commit 
+	 * or rollback any open {@link Transaction}
 	 */
 	@Override
 	@Transactional
@@ -56,11 +56,18 @@ public class UsersServiceImpl implements UsersService {
 	public CursorList<User> find(boolean includeDeleted, Cursor cursor, int pageSize) {
 		return entityManager.createQuery(User.class)
 				// less indexes saves trees
-				// .equal(Attrs.DELETED, false)
+				// .equal(Attrs.DELETED, includeDeleted? null : Boolean.FALSE)
 				.withPredicate(includeDeleted? null : NOT_DELETED)
 				.withStartCursor(cursor)
 				.asCursorList(pageSize)
 				;
+	}
+	
+	@Override
+	public void delete(Key userKey) {
+		User user = get(userKey);
+		user.setDeleted(true);
+		entityManager.put(user);
 	}
 	
 	@Override
@@ -76,7 +83,7 @@ public class UsersServiceImpl implements UsersService {
 		List<User> users = Lists.newArrayListWithCapacity(numUsers);
 		for (int i = 0; i < numUsers; i++) {
 			User user = User.createExampleUser();
-			user.setDeleted(i % 7 == 0);
+			user.setDeleted(i % 4 == 0);
 			users.add(user);
 		}
 		entityManager.put(users);

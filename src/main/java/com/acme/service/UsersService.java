@@ -15,6 +15,8 @@ public interface UsersService {
 
 	User save(User user);
 	
+	void delete(Key userKey);
+	
 	CursorList<User> find(boolean includeDeleted, Cursor cursor, int pageSize);
 
 	void reset();

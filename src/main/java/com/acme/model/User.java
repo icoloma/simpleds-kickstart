@@ -2,6 +2,7 @@ package com.acme.model;
 
 import static com.acme.model.Attrs.DELETED;
 import static com.acme.model.Attrs.DESCRIPTION;
+import static com.acme.model.Attrs.EXTRA;
 import static com.acme.model.Attrs.KEY;
 import static com.acme.model.Attrs.NAME;
 
@@ -10,6 +11,7 @@ import java.util.Random;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.simpleds.KeyFactory2;
+import org.simpleds.annotations.AsJSON;
 import org.simpleds.annotations.Cacheable;
 import org.simpleds.annotations.Id;
 import org.simpleds.annotations.Property;
@@ -31,6 +33,9 @@ public class User {
 	@Property(unindexed=true, converter=StringToTextConverter.class, value=DESCRIPTION)
 	@JsonProperty
 	private String description;
+	
+	@Property(EXTRA) @AsJSON
+	private ExtraData extra;
 	
 	@Property(required=true, value=DELETED)
 	private boolean deleted;
@@ -81,10 +86,19 @@ public class User {
 		User user = new User();
 		user.setName(LOREM_IPSUM.getWords(Math.abs(3 + RANDOM.nextInt(40))));
 		user.setDescription(LOREM_IPSUM.getParagraphs(2));
+		user.setExtra(new ExtraData(LOREM_IPSUM.getWords(1), LOREM_IPSUM.getWords(1)));
 		return user;
 	}
 	
 	private static LoremIpsum LOREM_IPSUM = new LoremIpsum();
 	private static Random RANDOM = new Random();
+
+	public ExtraData getExtra() {
+		return extra;
+	}
+
+	public void setExtra(ExtraData extra) {
+		this.extra = extra;
+	}
 	
 }

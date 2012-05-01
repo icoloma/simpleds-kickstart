@@ -1,4 +1,4 @@
-package com.acme.model;
+package com.acme.action;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
