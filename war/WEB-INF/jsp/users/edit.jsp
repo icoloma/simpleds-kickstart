@@ -1,4 +1,4 @@
-<tags:layout title="Hello worlders">
+<tags:layout title="Edit ${it.id}">
 <jsp:attribute name="js">
 	<script>
 	$('.delete').click(function() {
@@ -17,6 +17,9 @@
 <jsp:body>
 	<h1 class="page-header">Edit entity ${it.id}</h1>
 	<form method="post" action="${requestScope['javax.servlet.forward.request_uri']}" class="span5">
+        <p>This is what this entity looks like in the datastore:
+        <pre>${entity}</pre>
+
 		<label>
 			Name
 			<input name="name" type="text" value="${it.name}" class="span4">
@@ -31,8 +34,6 @@
 			<button class="btn btn-danger delete">Delete</button>
 			<input class="btn btn-primary" type="submit"> 
 		
-		<p>This is what this entity looks like in the datastore:
-		<pre>${entity}</pre>
 	</form>
 	<aside class="alert alert-block span6">
 		<h3>What you should be seeing here:</h3>
