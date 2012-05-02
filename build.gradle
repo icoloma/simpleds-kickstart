@@ -38,11 +38,14 @@ task 'webinflib' << {
         into "$webAppDirName/WEB-INF/lib"
     }
 }
-compileJava.dependsOn webinflib
+eclipseClasspath.dependsOn webinflib
 
  
 dependencies {
-  compile "com.google.inject:guice:3.0",
+  compile "aopalliance:aopalliance:1.0",
+          "ch.qos.logback:logback-classic:0.9.24",
+          "com.google.appengine:appengine-api-1.0-sdk:${appengineVersion}",
+          "com.google.inject:guice:3.0",
           "com.google.inject.extensions:guice-servlet:3.0",
           "com.sun.jersey.contribs:jersey-guice:${jerseyVersion}",
           "com.sun.jersey.contribs:jersey-multipart:${jerseyVersion}",
@@ -50,13 +53,13 @@ dependencies {
           "com.sun.jersey:jersey-json:${jerseyVersion}",
           "com.sun.jersey:jersey-servlet:${jerseyVersion}",
           "com.sun.jersey:jersey-server:${jerseyVersion}",
-          "com.sun.xml.bind:jaxb-impl:2.1.12", // Better than 2.2.5, workaround for https://groups.google.com/group/google-appengine-java/browse_thread/thread/dc8ed0738064f486/4be34ebef5a91b08
-          "aopalliance:aopalliance:1.0",
-          "ch.qos.logback:logback-classic:0.9.24",
+          // Better than 2.2.5, workaround for https://groups.google.com/group/google-appengine-java/browse_thread/thread/dc8ed0738064f486/4be34ebef5a91b08
+          "com.sun.xml.bind:jaxb-impl:2.1.12", 
           "joda-time:joda-time:2.1",
           "org.codehaus.jackson:jackson-core-asl:1.9.2",
           "org.codehaus.jackson:jackson-mapper-asl:1.9.2",
           "org.extrema-sistemas:simpleds:${simpledsVersion}"
+          
   testCompile "junit:junit:4.5"
 }
  
