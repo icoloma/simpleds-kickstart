@@ -1,4 +1,4 @@
-<tags:layout title="Hello worlders">
+<tags:layout title="Hello world!">
 
 <jsp:attribute name="js">
     <script src="/js/jquery.endlessScroll.js"></script>
@@ -9,7 +9,8 @@
         cursor,
 
         $tbody = $('.userList > tbody');
-    var bindScroll = function() {
+    var bindScroll = function(e) {
+    	e && e.preventDefault(); 
     	$tbody.html('');
 	    $(document).endlessScroll({
 	        bottomPixels: 100,
@@ -43,7 +44,6 @@
 	            });
 	        }
 	    });
-	    return false;
 	};
 	bindScroll();
 	$('.refresh').click(bindScroll);

@@ -5,15 +5,14 @@
 * Copyright 2011 Louis-Remi & Luke Shumard * Licensed under the MIT license. *
 */
 
-var event = $.event,
-	scrollTimeout;
+var scrollTimeout;
 
-event.special.smartscroll = {
+$.event.special.smartscroll = {
 	setup: function () {
-		$(this).bind("scroll", event.special.smartscroll.handler);
+		$(this).bind("scroll", $.event.special.smartscroll.handler);
 	},
 	teardown: function () {
-		$(this).unbind("scroll", event.special.smartscroll.handler);
+		$(this).unbind("scroll", $.event.special.smartscroll.handler);
 	},
 	handler: function (event, execAsap) {
 		// Save the context

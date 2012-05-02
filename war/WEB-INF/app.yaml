@@ -7,7 +7,7 @@
 
 application: simpleds-kickstart
 
-version: 2012-04-29
+version: 1-0
 
 static_files:
 - include: /js/*.js
@@ -22,14 +22,8 @@ static_files:
 - include: /robots.txt
 
 error_handlers:
-- file: /error/default.html
-  error_code: default
 - file: /error/over_quota.html
   error_code: over_quota
-- file: /error/dos_api_denial.html
-  error_code: dos_api_denial
-- file: /error/timeout.html
-  error_code: timeout
 
 sessions_enabled: false
 
