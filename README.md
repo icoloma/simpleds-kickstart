@@ -11,4 +11,6 @@ first thing that you want to click is the "reset datastore" red button to popula
 
 For an introduction to the frameworks involved, see [this presentation at Codemotion 2012](http://www.slideshare.net/icoloma/codemotion-appengine)
 
-A live demo is available [here](http://simpleds-kickstart.appspot.com/)
+A live demo is available [here](http://simpleds-kickstart.appspot.com/) 
+
+**Be aware**: the demo application is running on free quotas, so warmup delays are likely. Be patient.
