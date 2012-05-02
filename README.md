@@ -7,4 +7,6 @@ To get the project started, download gradle >= 1.0rc2 and execute <code>gradle e
 
 Import the project into your eclipse workspace and create a Web Application launcher. The project compiles your classes directly on war/WEB-INF/classes, so you can just launch and open your browser. 
 
-For an introduction to all this, see [this presentation at Codemotion 2012](http://www.slideshare.net/icoloma/codemotion-appengine)
+For an introduction to the frameworks involved, see [this presentation at Codemotion 2012](http://www.slideshare.net/icoloma/codemotion-appengine)
+
+A live demo is available [here](http://simpleds-kickstart.appspot.com/)
