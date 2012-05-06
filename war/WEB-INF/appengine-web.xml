@@ -17,6 +17,9 @@
   <threadsafe>true</threadsafe>
   <code-lock>false</code-lock>
   <sessions-enabled>false</sessions-enabled>
+  <system-properties>
+    <property name='java.util.logging.config.file' value='WEB-INF/classes/logging.properties'/>
+  </system-properties>
   <inbound-services>
   </inbound-services>
   <warmup-requests-enabled>true</warmup-requests-enabled>
