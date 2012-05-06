@@ -13,6 +13,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.simpleds.KeyFactory2;
 import org.simpleds.annotations.AsJSON;
 import org.simpleds.annotations.Cacheable;
+import org.simpleds.annotations.Entity;
 import org.simpleds.annotations.Id;
 import org.simpleds.annotations.Property;
 import org.simpleds.converter.StringToTextConverter;
@@ -20,6 +21,7 @@ import org.simpleds.converter.StringToTextConverter;
 import com.acme.util.LoremIpsum;
 import com.google.appengine.api.datastore.Key;
 
+@Entity("u")
 @Cacheable
 @JsonIgnoreProperties("key")
 public class User {
