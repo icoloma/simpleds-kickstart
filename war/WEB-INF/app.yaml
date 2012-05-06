@@ -21,6 +21,9 @@ static_files:
 - include: /error/*.html
 - include: /robots.txt
 
+system_properties:
+  java.util.logging.config.file: WEB-INF/classes/logging.properties
+
 error_handlers:
 - file: /error/over_quota.html
   error_code: over_quota
@@ -52,7 +55,7 @@ handlers:
     logMessage: "Appstats available: <a href='/_ah/appstats/details?time={ID}'>/_ah/appstats/details?time={ID}</a>"
 
 - url: /*
-  filter: com.acme.filter.GuiceFilter
+  filter: com.google.inject.servlet.GuiceFilter
 
 - url: /_ah/warmup
   servlet: com.acme.servlet.WarmupServlet
