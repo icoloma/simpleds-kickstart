@@ -21,11 +21,11 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter>
-    <filter-name>com.acme.filter.GuiceFilter</filter-name>
-    <filter-class>com.acme.filter.GuiceFilter</filter-class>
+    <filter-name>com.google.inject.servlet.GuiceFilter</filter-name>
+    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>com.acme.filter.GuiceFilter</filter-name>
+    <filter-name>com.google.inject.servlet.GuiceFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <servlet>

@@ -9,6 +9,7 @@ import com.google.common.collect.Sets;
 import com.google.inject.servlet.ServletModule;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
+import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 /**
  * Configure web stuff
@@ -31,7 +32,7 @@ public class MyServletModule extends ServletModule {
 		bind(MyExceptionMapper.class);
 		
 		// jersey customization
-        serve("/*").with(
+        filter("/*").through(
         	GuiceContainer.class, 
         	ImmutableMap.<String, String>builder()
         	
@@ -40,6 +41,9 @@ public class MyServletModule extends ServletModule {
 	    		
 	    		// workaround for http://java.net/jira/browse/JERSEY-630
 	    		.put("com.sun.jersey.config.feature.DisableWADL", "true") 
+	    		
+	    		// do not intercept /_ah/* requests
+	    		.put(ServletContainer.PROPERTY_WEB_PAGE_CONTENT_REGEX, "/_ah/.*")
 	    		
 	    		// use Jackson to serialize
 	    		.put(JSONConfiguration.FEATURE_POJO_MAPPING, "true") 
