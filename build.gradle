@@ -13,32 +13,12 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
 */
 
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'eclipse'
+apply from: 'https://raw.github.com/icoloma/gradle-plugins/master/appengine.gradle'
 
 repositories {
   mavenCentral()
   mavenRepo name:'sonatype-snapshots', url:'http://oss.sonatype.org/content/repositories/snapshots/'
 }
-
-// webinflib
-if (!hasProperty('webAppDirName')) {
-  project.webAppDirName = 'src/main/webapp'
-}
-
-task 'cleanWebinflib' << { 
-  ant.delete(dir: "$webAppDirName/WEB-INF/lib")
-}
-clean.dependsOn cleanWebinflib
-
-task 'webinflib' << {
-  copy {
-    from configurations.runtime.files
-        into "$webAppDirName/WEB-INF/lib"
-    }
-}
-eclipseClasspath.dependsOn webinflib
 
  
 dependencies {
@@ -63,24 +43,3 @@ dependencies {
   testCompile "junit:junit:4.5"
 }
  
-eclipse {
-  project {
-    natures 'org.eclipse.jdt.core.javanature',
-            'com.google.appengine.eclipse.core.gaeNature',
-            'com.google.gdt.eclipse.core.webAppNature'
-    buildCommand 'com.google.appengine.eclipse.core.projectValidator'
-    buildCommand 'com.google.gdt.eclipse.core.webAppProjectValidator'
-  }
-  classpath {
-    defaultOutputDir = file("$webAppDirName/WEB-INF/classes")
-    containers "com.google.appengine.eclipse.core.GAE_CONTAINER"
-    sourceSets {
-      resources {
-        output.resourcesDir = "build/test-classes"
-        output.classesDir   = "build/test-classes"
-      }
-    }
-  }
-}
-// workaround http://issues.gradle.org/browse/GRADLE-1984
-eclipse.classpath.file.beforeMerged { classpath -> classpath.entries.clear() }
