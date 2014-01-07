@@ -14,3 +14,5 @@ For an introduction to the frameworks involved, see [this presentation at Codemo
 A live demo is available [here](http://simpleds-kickstart.appspot.com/) 
 
 **Be aware**: the demo application is running on free quotas, so warmup delays are likely. Be patient.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-3159223-5/icoloma/simpleds-kickstart)](https://github.com/icoloma/simpleds-kickstart)
